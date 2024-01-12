@@ -4,6 +4,9 @@ import CategoryList from "./CategoryList";
 import ProductList from "./ProductList";
 import { Container, Row, Col } from "reactstrap";
 import alertify from "alertifyjs";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import NotFound from "./NotFound";
+import CartList from "./CartList";
 
 export default class App extends Component {
   state = { currentCategory: "", products: [], cart: [] };
@@ -66,11 +69,32 @@ export default class App extends Component {
               />
             </Col>
             <Col xs="9">
-              <ProductList
-                addToCart={this.addToCart}
-                products={this.state.products}
-                info={productInfo}
-              />
+              <Router>
+                <Routes>
+                  <Route
+                    exact
+                    path="/"
+                    element={
+                      <ProductList
+                        addToCart={this.addToCart}
+                        products={this.state.products}
+                        info={productInfo}
+                      />
+                    }
+                  ></Route>
+                  <Route
+                    exact
+                    path="/cart"
+                    element={
+                      <CartList
+                        cart={this.state.cart}
+                        removeFromCart={this.removeFromCart}
+                      />
+                    }
+                  ></Route>
+                  <Route exact path="*" element={<NotFound />}></Route>
+                </Routes>
+              </Router>
             </Col>
           </Row>
         </Container>
