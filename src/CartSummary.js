@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { BrowserRouter as Link } from "react-router-dom";
 import {
   Badge,
   DropdownItem,
@@ -29,7 +29,7 @@ export default class extends Component {
             </DropdownItem>
           ))}
           <DropdownItem>
-            <Link to="/cart">Home</Link>
+            <Link to="/cart">Cart</Link>
           </DropdownItem>
         </DropdownMenu>
       </UncontrolledDropdown>
