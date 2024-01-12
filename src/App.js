@@ -3,20 +3,47 @@ import Navi from "./Navi";
 import CategoryList from "./CategoryList";
 import ProductList from "./ProductList";
 import { Container, Row, Col } from "reactstrap";
+import alertify from "alertifyjs";
 
 export default class App extends Component {
-  state = { currentCategory: "", products: [] };
+  state = { currentCategory: "", products: [], cart: [] };
 
   componentDidMount() {
     this.getProducts();
   }
 
-  changeCategory = (category) => {
-    this.setState({ currentCategory: category.categoryName });
+  addToCart = (product) => {
+    let newCart = this.state.cart;
+    var addedItem = newCart.find((c) => c.product.id === product.id);
+    if (addedItem) {
+      addedItem.quantity += 1;
+    } else {
+      newCart.push({ product: product, quantity: 1 });
+    }
+
+    this.setState({ cart: newCart });
+
+    alertify.success(product.productName + " added to cart!", 2);
   };
 
-  getProducts = () => {
-    fetch("http://localhost:3001/products")
+  removeFromCart = (product) => {
+    let newCart = this.state.cart.filter(
+      (cart) => cart.product.id !== product.id
+    );
+    this.setState({ cart: newCart });
+  };
+
+  changeCategory = (category) => {
+    this.setState({ currentCategory: category.categoryName });
+    this.getProducts(category.id);
+  };
+
+  getProducts = (categoryId) => {
+    let url = "http://localhost:3001/products";
+    if (categoryId) {
+      url += "?categoryId=" + categoryId;
+    }
+    fetch(url)
       .then((response) => response.json())
       .then((data) => this.setState({ products: data }));
   };
@@ -28,7 +55,7 @@ export default class App extends Component {
       <div>
         <Container>
           <Row>
-            <Navi />
+            <Navi removeFromCart={this.removeFromCart} cart={this.state.cart} />
           </Row>
           <Row>
             <Col xs="3">
@@ -39,7 +66,11 @@ export default class App extends Component {
               />
             </Col>
             <Col xs="9">
-              <ProductList products={this.state.products} info={productInfo} />
+              <ProductList
+                addToCart={this.addToCart}
+                products={this.state.products}
+                info={productInfo}
+              />
             </Col>
           </Row>
         </Container>
