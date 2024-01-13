@@ -4,7 +4,7 @@ import CategoryList from "./CategoryList";
 import ProductList from "./ProductList";
 import { Container, Row, Col } from "reactstrap";
 import alertify from "alertifyjs";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Router, Routes, Route, Link } from "react-router-dom";
 import NotFound from "./NotFound";
 import CartList from "./CartList";
 
@@ -23,8 +23,6 @@ export default class App extends Component {
     } else {
       newCart.push({ product: product, quantity: 1 });
     }
-
-    this.setState({ cart: newCart });
 
     alertify.success(product.productName + " added to cart!", 2);
   };
@@ -69,32 +67,30 @@ export default class App extends Component {
               />
             </Col>
             <Col xs="9">
-              <Router>
-                <Routes>
-                  <Route
-                    exact
-                    path="/"
-                    element={
-                      <ProductList
-                        addToCart={this.addToCart}
-                        products={this.state.products}
-                        info={productInfo}
-                      />
-                    }
-                  ></Route>
-                  <Route
-                    exact
-                    path="/cart"
-                    element={
-                      <CartList
-                        cart={this.state.cart}
-                        removeFromCart={this.removeFromCart}
-                      />
-                    }
-                  ></Route>
-                  <Route exact path="*" element={<NotFound />}></Route>
-                </Routes>
-              </Router>
+              <Routes>
+                <Route
+                  exact
+                  path="/"
+                  element={
+                    <ProductList
+                      addToCart={this.addToCart}
+                      products={this.state.products}
+                      info={productInfo}
+                    />
+                  }
+                ></Route>
+                <Route
+                  exact
+                  path="/cart"
+                  element={
+                    <CartList
+                      cart={this.state.cart}
+                      removeFromCart={this.removeFromCart}
+                    />
+                  }
+                ></Route>
+                <Route exact path="*" element={<NotFound />}></Route>
+              </Routes>
             </Col>
           </Row>
         </Container>

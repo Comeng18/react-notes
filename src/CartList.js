@@ -16,14 +16,14 @@ export default class CartList extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.cart.map((cart) => {
-            <tr key={cart.product.id}>
-              <td>{cart.product.id}</td>
-              <td>{cart.product.categoryId}</td>
-              <td>{cart.product.productName}</td>
-              <td>{cart.product.unitPrice}</td>
-              <td>{cart.product.unitsInStock}</td>
-              <td>{cart.product.quantityPerUnit}</td>
+          {this.props.cart.map((c) => {
+            <tr key={c.product.id}>
+              <td>{c.product.id}</td>
+              <td>{c.product.categoryId}</td>
+              <td>{c.product.productName}</td>
+              <td>{c.product.unitPrice}</td>
+              <td>{c.product.unitsInStock}</td>
+              <td>{c.product.quantityPerUnit}</td>
             </tr>;
           })}
         </tbody>

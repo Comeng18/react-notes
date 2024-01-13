@@ -29,7 +29,7 @@ export default class CategoryList extends Component {
                   : false
               }
               onClick={() => this.props.changeCategory(category)}
-              key={category.Id}
+              key={category.id}
             >
               {category.categoryName}
             </ListGroupItem>
