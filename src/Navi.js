@@ -10,6 +10,7 @@ import {
   Collapse,
 } from "reactstrap";
 import CartSummary from "./CartSummary";
+import { Link } from "react-router-dom";
 
 export default class Navi extends Component {
   state = { isOpen: false };
@@ -30,6 +31,12 @@ export default class Navi extends Component {
                 removeFromCart={this.props.removeFromCart}
                 cart={this.props.cart}
               ></CartSummary>
+              <NavItem>
+                <Link to="/form"> Form </Link>
+              </NavItem>
+              <NavItem>
+                <Link to="/form2"> Form 2 </Link>
+              </NavItem>
             </Nav>
           </Collapse>
         </Navbar>

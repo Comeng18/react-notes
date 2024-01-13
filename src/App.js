@@ -4,9 +4,11 @@ import CategoryList from "./CategoryList";
 import ProductList from "./ProductList";
 import { Container, Row, Col } from "reactstrap";
 import alertify from "alertifyjs";
-import { Router, Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import NotFound from "./NotFound";
 import CartList from "./CartList";
+import FormDemo from "./FormDemo";
+import FormDemo2 from "./FormDemo2";
 
 export default class App extends Component {
   state = { currentCategory: "", products: [], cart: [] };
@@ -32,6 +34,7 @@ export default class App extends Component {
       (cart) => cart.product.id !== product.id
     );
     this.setState({ cart: newCart });
+    alertify.error(product.productName + " removed from cart!", 2);
   };
 
   changeCategory = (category) => {
@@ -90,6 +93,8 @@ export default class App extends Component {
                   }
                 ></Route>
                 <Route exact path="*" element={<NotFound />}></Route>
+                <Route path="/form" element={<FormDemo />}></Route>
+                <Route path="/form2" element={<FormDemo2 />}></Route>
               </Routes>
             </Col>
           </Row>
